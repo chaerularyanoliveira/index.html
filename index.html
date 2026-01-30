@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Just For Lala 🤍</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: url("IMG-20260124-WA0031.jpg") center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(8px);
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      background: rgba(20,20,20,0.8);
+      padding: 30px;
+      border-radius: 18px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      color: #f5f5f5;
+    }
+
+    .slide {
+      display: none;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .slide.active {
+      display: block;
+      animation: fade 0.6s;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-btn {
+      margin-top: 18px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secret {
+      display: none;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+
+    .reply {
+      display: none;
+      margin-top: 12px;
+      background: #2563eb;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Musik (loop terus) -->
+  <audio autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="overlay"></div>
+
+  <div class="card">
+
+    <div class="slide active">
+      Halo kamu, iya kamu yang baca ini 🤍<br>
+      aku sengaja bikin ini cuma buat kamu loh.<br>
+      Jadi pelan aja ya bacanya.
+    </div>
+
+    <div class="slide">
+      Kamu lagi demam ya?<br>
+      Makan, minum obat, sama istirahat yang cukup<br>
+      biar cepet sembuh 💞<br>
+      biar bisa aktivitas seperti biasa.
+    </div>
+
+    <div class="slide">
+      Kalau butuh apa pun jangan sungkan,<br>
+      bilang aja ya.<br>
+      Aku siap bantu sebisaku.<br>
+      Pokoknya kamu harus cepet sehat.
+    </div>
+
+    <div class="slide">
+      Kalau kamu sehat bisa nih main badminton bareng wkwkwk 🏸<br>
+      kan kamu pengen badminton katanya.<br>
+      Jadi cepet sembuh dong.
+    </div>
+
+    <div class="slide">
+      <button class="nav-btn" onclick="showSecret()">buka pesan kecil</button>
+
+      <div id="secret" class="secret">
+        Sayang cepet sembuh yaa 🥺<br>
+        Sepi tau kalau kamu sakit begini,<br>
+        nggak ada yang ngajak main.<br><br>
+        Jadi istirahat yang cukup,<br>
+        jangan sedih,<br>
+        jangan banyak pikiran.<br>
+        Get well soon 💞
+      </div>
+
+      <button class="nav-btn reply" id="replyBtn"
+        onclick="window.open('https://wa.me/62XXXXXXXXXX','_blank')">
+        balas aku 💬
+      </button>
+    </div>
+
+    <button class="nav-btn" onclick="nextSlide()">lanjut</button>
+
+  </div>
+
+  <script>
+    let index = 0;
+    const slides = document.querySelectorAll(".slide");
+
+    function nextSlide() {
+      slides[index].classList.remove("active");
+      index++;
+      if (index >= slides.length) index = slides.length - 1;
+      slides[index].classList.add("active");
+    }
+
+    function showSecret() {
+      document.getElementById("secret").style.display = "block";
+      document.getElementById("replyBtn").style.display = "inline-block";
+    }
+  </script>
+
+</body>
+</html>

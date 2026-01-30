@@ -3,84 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <title>Just For Lala 🤍</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    :root {
+      --bg-image: url("bg1.jpg");
+      --card-bg: rgba(15,15,15,0.78);
+      --btn-main: #22c55e;
+      --btn-reply: #2563eb;
+      --text-main: #f5f5f5;
+    }
+
     body {
       margin: 0;
       height: 100vh;
-      font-family: Arial, sans-serif;
-      background: url("IMG-20260124-WA0031bg.jpg") center/cover no-repeat;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: var(--bg-image) center/cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: background 0.8s ease;
     }
 
     .overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.45); /* TIDAK BLUR */
     }
 
     .card {
       position: relative;
       z-index: 2;
-      background: rgba(20,20,20,0.8);
-      padding: 30px;
-      border-radius: 18px;
+      background: var(--card-bg);
+      padding: 28px;
+      border-radius: 22px;
       width: 90%;
-      max-width: 420px;
+      max-width: 460px;
       text-align: center;
-      color: #f5f5f5;
+      color: var(--text-main);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.45);
     }
 
     .slide {
       display: none;
-      font-size: 15px;
-      line-height: 1.7;
+      font-size: clamp(16px, 4.2vw, 18px);
+      line-height: 1.85;
+      animation: fade 0.5s ease;
     }
 
     .slide.active {
       display: block;
-      animation: fade 0.6s;
     }
 
     @keyframes fade {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .nav-btn {
       margin-top: 18px;
-      padding: 10px 18px;
+      padding: 11px 22px;
       border: none;
-      border-radius: 10px;
-      background: #22c55e;
+      border-radius: 14px;
+      background: var(--btn-main);
       color: #0f172a;
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 700;
       cursor: pointer;
     }
 
     .secret {
       display: none;
       margin-top: 16px;
-      font-size: 14px;
+      font-size: clamp(15px, 4vw, 17px);
+      line-height: 1.8;
     }
 
     .reply {
       display: none;
-      margin-top: 12px;
-      background: #2563eb;
-      color: white;
+      margin-top: 14px;
+      background: var(--btn-reply);
+      color: #fff;
     }
   </style>
 </head>
 
 <body>
 
-
-  <audio autoplay loop>
+  <!-- MUSIC -->
+  <audio id="bgm" loop>
     <source src="original sound - rndmsc.01_musicaldown.com_1769786484.mp3" type="audio/mpeg">
   </audio>
 
@@ -88,42 +99,36 @@
 
   <div class="card">
 
-    <div class="slide active">
+    <div class="slide active" data-bg="bg1.jpg">
       Halo kamu, iya kamu yang baca ini 🤍<br>
       aku sengaja bikin ini cuma buat kamu loh.<br>
       Jadi pelan aja ya bacanya.
     </div>
 
-    <div class="slide">
+    <div class="slide" data-bg="bg2.jpg">
       Kamu lagi demam ya?<br>
-      Makan, minum obat, sama istirahat yang cukup<br>
-      biar cepet sembuh 💞<br>
-      biar bisa aktivitas seperti biasa.
+      Makan, minum obat, dan istirahat yang cukup<br>
+      biar cepet sembuh 💞
     </div>
 
-    <div class="slide">
+    <div class="slide" data-bg="bg3.jpg">
       Kalau butuh apa pun jangan sungkan,<br>
       bilang aja ya.<br>
-      Aku siap bantu sebisaku.<br>
-      Pokoknya kamu harus cepet sehat.
+      Aku siap bantu sebisaku.
     </div>
 
-    <div class="slide">
+    <div class="slide" data-bg="bg4.jpg">
       Kalau kamu sehat bisa nih main badminton bareng wkwkwk 🏸<br>
-      kan kamu pengen badminton katanya.<br>
       Jadi cepet sembuh dong.
     </div>
 
-    <div class="slide">
+    <div class="slide" data-bg="bg5.jpg">
       <button class="nav-btn" onclick="showSecret()">buka pesan kecil</button>
 
       <div id="secret" class="secret">
         Sayang cepet sembuh yaa 🥺<br>
-        Sepi tau kalau kamu sakit begini,<br>
-        nggak ada yang ngajak main.<br><br>
-        Jadi istirahat yang cukup,<br>
-        jangan sedih,<br>
-        jangan banyak pikiran.<br>
+        Sepi tau kalau kamu sakit begini.<br><br>
+        Jangan sedih dan jangan banyak pikiran.<br>
         Get well soon 💞
       </div>
 
@@ -139,13 +144,26 @@
 
   <script>
     let index = 0;
+    let started = false;
     const slides = document.querySelectorAll(".slide");
+    const audio = document.getElementById("bgm");
 
     function nextSlide() {
+      if (!started) {
+        audio.play(); // AUTOPLAY SAAT KLIK PERTAMA
+        started = true;
+      }
+
       slides[index].classList.remove("active");
       index++;
       if (index >= slides.length) index = slides.length - 1;
       slides[index].classList.add("active");
+
+      const bg = slides[index].getAttribute("data-bg");
+      document.documentElement.style.setProperty(
+        "--bg-image",
+        `url('${bg}')`
+      );
     }
 
     function showSecret() {
